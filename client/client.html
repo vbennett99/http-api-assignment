@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Our simple HTTP server</title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-  <script type="text/babel">
+    <title>Our simple HTTP server</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <script type="text/babel">
+        const handleResponse = (xhr) => {
+            const content = document.querySelector("#content");
+            
+            const obj = JSON.parse(xhr.response);
+            
+            switch(xhr.status){
+                case 200:
+                    content.innerHTML = "<b>Success!</b>";
+                    break;
+                case 400:
+                    content.innerHTML = "<b>Bad Request... :(</b>";
+                    break;
+                case 401:
+                    content.innerHTML = "<b>User Unauthorized</b>";
+                    break;
+                case 403:
+                    content.innerHTML = "<b>User forbidden</b>";
+                    break;
+                case 500:
+                    content.innerHTML = "<b>Internal error</b>";
+                    break;
+                case 501:
+                    content.innerHTML = "<b>Resource not yet implemented</b>";
+                    break;
+                case 404:
+                    content.innerHTML = "<b>Resource not found.</b>";
+                    break;
+                default:
+                    content.innerHTML = "<b>Error code not implemented by client.</b>";
+                    break;   
+            }
+            
+            content.innerHTML += `<p>${obj.message}</p>`;
+        };
 
-  </script>
+        const sendAjax = (url) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.setRequestHeader("Accept", 'application/json');
+            
+            xhr.onload = () => handleResponse(xhr);
+            
+            xhr.send();
+        };
+        
+        const init = () => {
+            const sendButton = document.querySelector("#send");
+            const page = document.querySelector("#page").value;
+            const type = document.querySelector("#type").value; //Add this later
+            
+            sendButton.addEventListener('click', () => sendAjax(`${page}`));
+        };
+
+        window.onload = init;
+    </script>
 </head>
 <body>
   <section id="top">
