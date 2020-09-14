@@ -2,60 +2,113 @@
 <html lang="en">
 <head>
     <title>Our simple HTTP server</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script type="text/babel">
-        const handleResponse = (xhr) => {
+        const handleResponse = (xhr, type) => {
+            //get content-type from dropdown
             const content = document.querySelector("#content");
             
-            const obj = JSON.parse(xhr.response);
-            
-            switch(xhr.status){
-                case 200:
-                    content.innerHTML = "<b>Success!</b>";
-                    break;
-                case 400:
-                    content.innerHTML = "<b>Bad Request... :(</b>";
-                    break;
-                case 401:
-                    content.innerHTML = "<b>User Unauthorized</b>";
-                    break;
-                case 403:
-                    content.innerHTML = "<b>User forbidden</b>";
-                    break;
-                case 500:
-                    content.innerHTML = "<b>Internal error</b>";
-                    break;
-                case 501:
-                    content.innerHTML = "<b>Resource not yet implemented</b>";
-                    break;
-                case 404:
-                    content.innerHTML = "<b>Resource not found.</b>";
-                    break;
-                default:
-                    content.innerHTML = "<b>Error code not implemented by client.</b>";
-                    break;   
+            //creating an h1 and a p to hold message response
+            let h1 = document.querySelector("h1");
+            if(h1 === null){
+                h1 = document.createElement("h1");
             }
             
-            content.innerHTML += `<p>${obj.message}</p>`;
+            let p = document.querySelector("p");
+            if(p === null){
+                p = document.createElement("p");
+            }
+            
+            const page = document.querySelector("#page");
+            
+            //JSON
+            if(type === 'application/json'){
+                switch(xhr.status){
+                    case 200:
+                        h1.textContent = "Success!";
+                        break;
+                    case 400:
+                        h1.textContent = "Bad Request... :(";
+                        break;
+                    case 401:
+                        h1.textContent = "User Unauthorized";
+                        break;
+                    case 403:
+                        h1.textContent = "User forbidden";
+                        break;
+                    case 500:
+                        h1.textContent = "Internal error";
+                        break;
+                    case 501:
+                        h1.textContent = "Resource not yet implemented";
+                        break;
+                    case 404:
+                        h1.textContent = "Resource not found.";
+                        break;
+                    default:
+                        h1.textContent = "Error code not implemented by client.";
+                        break;   
+                }
+                const obj = JSON.parse(xhr.response);
+                p.textContent = `${obj.message}`;
+                console.log(obj);
+            }
+            
+            //XML
+            if(type === 'text/xml'){
+               switch(xhr.status){
+                    case 200:
+                        h1.textContent = "Success!";
+                        break;
+                    case 400:
+                        h1.textContent = "Bad Request... :(";
+                        break;
+                    case 401:
+                        h1.textContent = "User Unauthorized";
+                        break;
+                    case 403:
+                        h1.textContent = "User forbidden";
+                        break;
+                    case 500:
+                        h1.textContent = "Internal error";
+                        break;
+                    case 501:
+                        h1.textContent = "Resource not yet implemented";
+                        break;
+                    case 404:
+                        h1.textContent = "Resource not found.";
+                        break;
+                    default:
+                        h1.textContent = "Error code not implemented by client.";
+                        break;
+                }
+                
+                const xmlMessage = xhr.response;
+                p.textContent = `${xmlMessage}`;
+                console.log(xhr.response);
+            }
+            
+            content.appendChild(h1);
+            content.appendChild(p);
         };
 
-        const sendAjax = (url) => {
+        const sendAjax = (url, type) => {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url);
-            xhr.setRequestHeader("Accept", 'application/json');
+            xhr.setRequestHeader("Accept", type);
             
-            xhr.onload = () => handleResponse(xhr);
+            xhr.onload = () => handleResponse(xhr, type);
             
             xhr.send();
         };
         
         const init = () => {
             const sendButton = document.querySelector("#send");
-            const page = document.querySelector("#page").value;
-            const type = document.querySelector("#type").value; //Add this later
+            const pageSelect = document.querySelector("#page");
+            const typeSelect = document.querySelector("#type"); //Add this later
             
-            sendButton.addEventListener('click', () => sendAjax(`${page}`));
+            sendButton.addEventListener('click', () => sendAjax(pageSelect.value, typeSelect.value));
         };
 
         window.onload = init;
@@ -75,7 +128,7 @@
     </select>
     <select id="type">
       <option value="application/json">JSON</option>
-      <option value="text/xml">XML</option>
+      <option value="text/html">XML</option> <!--CHANGE BACK TO text/xml LATER-->
     </select>
     <button id="send">Send</button>
   </section>
