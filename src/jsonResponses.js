@@ -55,9 +55,9 @@ const unauthorized = (request, response, type, params) => {
     responseJSON.id = 'unauthorized';
     if (type === 'text/xml') {
       const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
-      return respondXML(request, response, 400, responseXML);
+      return respondXML(request, response, 401, responseXML);
     }
-    return respondJSON(request, response, 400, responseJSON);
+    return respondJSON(request, response, 401, responseJSON);
   }
 
   // if param is present

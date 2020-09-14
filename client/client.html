@@ -26,28 +26,28 @@
             if(type === 'application/json'){
                 switch(xhr.status){
                     case 200:
-                        h1.textContent = "Success!";
+                        h1.textContent = "Success";
                         break;
                     case 400:
-                        h1.textContent = "Bad Request... :(";
+                        h1.textContent = "Bad Request";
                         break;
                     case 401:
-                        h1.textContent = "User Unauthorized";
+                        h1.textContent = "Unauthorized";
                         break;
                     case 403:
-                        h1.textContent = "User forbidden";
+                        h1.textContent = "Forbidden";
                         break;
                     case 500:
-                        h1.textContent = "Internal error";
+                        h1.textContent = "Internal";
                         break;
                     case 501:
-                        h1.textContent = "Resource not yet implemented";
+                        h1.textContent = "Not Implemented";
                         break;
                     case 404:
-                        h1.textContent = "Resource not found.";
+                        h1.textContent = "Not Found";
                         break;
                     default:
-                        h1.textContent = "Error code not implemented by client.";
+                        h1.textContent = "Error code not implemented by client";
                         break;   
                 }
                 const obj = JSON.parse(xhr.response);
@@ -59,28 +59,28 @@
             if(type === 'text/xml'){
                switch(xhr.status){
                     case 200:
-                        h1.textContent = "Success!";
+                        h1.textContent = "Success";
                         break;
                     case 400:
-                        h1.textContent = "Bad Request... :(";
+                        h1.textContent = "Bad Request";
                         break;
                     case 401:
-                        h1.textContent = "User Unauthorized";
+                        h1.textContent = "Unauthorized";
                         break;
                     case 403:
-                        h1.textContent = "User forbidden";
+                        h1.textContent = "Forbidden";
                         break;
                     case 500:
-                        h1.textContent = "Internal error";
+                        h1.textContent = "Internal";
                         break;
                     case 501:
-                        h1.textContent = "Resource not yet implemented";
+                        h1.textContent = "Not Implemented";
                         break;
                     case 404:
-                        h1.textContent = "Resource not found.";
+                        h1.textContent = "Not Found";
                         break;
                     default:
-                        h1.textContent = "Error code not implemented by client.";
+                        h1.textContent = "Error code not implemented by client";
                         break;
                 }
                 
@@ -106,7 +106,7 @@
         const init = () => {
             const sendButton = document.querySelector("#send");
             const pageSelect = document.querySelector("#page");
-            const typeSelect = document.querySelector("#type"); //Add this later
+            const typeSelect = document.querySelector("#type");
             
             sendButton.addEventListener('click', () => sendAjax(pageSelect.value, typeSelect.value));
         };
