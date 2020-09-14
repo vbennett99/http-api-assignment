@@ -31,14 +31,14 @@ const badRequest = (request, response, type, params) => {
     responseJSON.message = 'Missing valid query parameter set equal to true';
     responseJSON.id = 'badRequest';
     if (type === 'text/xml') {
-      const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+      const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
       return respondXML(request, response, 400, responseXML);
     }
     return respondJSON(request, response, 400, responseJSON);
   }
 
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message>`;
+    const responseXML = `<response><message>${responseJSON.message}</message></response>`;
     return respondXML(request, response, 200, responseXML);
   }
   return respondJSON(request, response, 200, responseJSON);
@@ -54,7 +54,7 @@ const unauthorized = (request, response, type, params) => {
     responseJSON.message = 'This user is unauthorized, please set loggedIn value to yes';
     responseJSON.id = 'unauthorized';
     if (type === 'text/xml') {
-      const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+      const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
       return respondXML(request, response, 400, responseXML);
     }
     return respondJSON(request, response, 400, responseJSON);
@@ -62,7 +62,7 @@ const unauthorized = (request, response, type, params) => {
 
   // if param is present
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message>`;
+    const responseXML = `<response><message>${responseJSON.message}</message></response>`;
     return respondXML(request, response, 200, responseXML);
   }
   return respondJSON(request, response, 200, responseJSON);
@@ -75,7 +75,7 @@ const forbidden = (request, response, type) => {
   };
 
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+    const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
     return respondXML(request, response, 403, responseXML);
   }
   return respondJSON(request, response, 403, responseJSON);
@@ -88,7 +88,7 @@ const internal = (request, response, type) => {
   };
 
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+    const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
     return respondXML(request, response, 500, responseXML);
   }
   return respondJSON(request, response, 500, responseJSON);
@@ -101,7 +101,7 @@ const notImplemented = (request, response, type) => {
   };
 
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+    const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
     return respondXML(request, response, 501, responseXML);
   }
   return respondJSON(request, response, 501, responseJSON);
@@ -114,7 +114,7 @@ const notFound = (request, response, type) => {
   };
 
   if (type === 'text/xml') {
-    const responseXML = `<message>${responseJSON.message}</message><id>${responseJSON.id}</id>`;
+    const responseXML = `<response><message>${responseJSON.message}</message><id>${responseJSON.id}</id></response>`;
     return respondXML(request, response, 404, responseXML);
   }
   return respondJSON(request, response, 404, responseJSON);
